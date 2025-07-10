@@ -1,0 +1,27 @@
+{
+  "name": "MatrixVogue",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/dotnet:1": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+  "postCreateCommand": "bash .devcontainer/setup.sh",
+  "customizations": {
+    "vscode": {
+      "settings": { 
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "terminal.integrated.profiles.linux": {
+          "bash": { "path": "bash", "args": ["--login"] }
+        },
+        "workbench.colorTheme": "Default Dark+",
+        "window.title": "MatrixVogue Terminal"
+      },
+      "extensions": [
+        "eamodio.gitlens",
+        "ms-vscode.powershell"
+      ]
+    }
+  }
+}
