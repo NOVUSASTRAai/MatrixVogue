@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MatrixVogue Terminal</title>
+    <style>
+        body {
+            background: #000;
+            color: #0f0;
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        #matrix-container {
+            position: relative;
+            height: 100vh;
+        }
+        #matrix-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        #terminal-info {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
+            background: rgba(0,20,0,0.7);
+            padding: 20px;
+            border: 1px solid #0f0;
+            border-radius: 5px;
+            max-width: 500px;
+        }
+        h1 {
+            border-bottom: 1px solid #0f0;
+            padding-bottom: 10px;
+        }
+        button {
+            background: #002;
+            color: #0f0;
+            border: 1px solid #0f0;
+            padding: 12px 25px;
+            margin-top: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        button:hover {
+            background: #0f0;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <div id="matrix-container">
+        <canvas id="matrix-canvas"></canvas>
+        <div id="terminal-info">
+            <h1>MATRIXVOGUE TERMINAL</h1>
+            <p>Cloud Access System: ONLINE</p>
+            <p>User: NOVUSASTRAai</p>
+            <p id="sys-info">Initializing system...</p>
+            <button onclick="openTerminal()">» ACCESS TERMINAL «</button>
+            <p id="status">Status: Connected</p>
+        </div>
+    </div>
+
+    <script>
+        // Matrix effect
+        const canvas = document.getElementById('matrix-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        const chars = "01010101010101010101";
+        const fontSize = 14;
+        const columns = canvas.width / fontSize;
+        const drops = [];
+        
+        for(let i = 0; i < columns; i++) {
+            drops[i] = Math.floor(Math.random() * canvas.height);
+        }
+        
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = '#0f0';
+            ctx.font = fontSize + 'px monospace';
+            
+            for(let i = 0; i < drops.length; i++) {
+                const char = chars[Math.floor(Math.random() * chars.length)];
+                ctx.fillText(char, i * fontSize, drops[i] * fontSize);
+                
+                if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                
+                drops[i]++;
+            }
+        }
+        
+        setInterval(drawMatrix, 35);
+        
+        // System info
+        function updateInfo() {
+            const cores = navigator.hardwareConcurrency || 2;
+            const ram = performance.memory ? (performance.memory.jsHeapSizeLimit / 1024 / 1024).toFixed(1) : 512;
+            document.getElementById('sys-info').innerText = 
+                `⚡ ${cores} CPU cores | 🧠 ${ram} MB RAM`;
+        }
+        
+        // Terminal access
+        function openTerminal() {
+            window.location.href = window.location.href.replace('https://', 'https://replit.com/');
+        }
+        
+        // Initialize
+        window.onload = function() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            updateInfo();
+            setInterval(updateInfo, 5000);
+        };
+        
+        window.onresize = function() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        };
+    </script>
+</body>
+  </html>
